@@ -11,7 +11,14 @@
     </head>
     <body>
         <div class="container mt-4">
+            {{-- Простое меню --}}
+            <nav>
+                <a href="{{ route('articles.index') }}">Статьи</a> |
+                <a href="{{ route('about') }}">О блоге</a>
+            </nav>
+
             <h1>@yield('header')</h1>
+
             <div>
                 @yield('content')
             </div>
