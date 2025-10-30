@@ -23,6 +23,9 @@
             </a>
         </h2>
         <div>{{ \Illuminate\Support\Str::limit($article->body, 200) }}</div>
+
+        {{-- 🔹 Ссылка на редактирование --}}
+        <a href="{{ route('articles.edit', $article->id) }}">Редактировать</a>
         <hr>
     @endforeach
 

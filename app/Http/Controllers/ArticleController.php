@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Requests\ArticleStoreRequest;
+use App\Http\Requests\ArticleUpdateRequest;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::paginate();
+        $articles = Article::orderBy('id', 'asc')->paginate();
         return view('article.index', compact('articles'));
     }
 
@@ -25,18 +27,29 @@ class ArticleController extends Controller
         return view('article.create', compact('article'));
     }
 
-    public function store(Request $request)
+    public function store(ArticleStoreRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|unique:articles|max:255',
-            'body' => 'required|min:10',
-        ]);
-
         $article = new Article();
-        $article->fill($data);
+        $article->fill($request->validated());
         $article->save();
 
-        return redirect()->route('articles.index')->with('success', 'Статья успешно создана!');
+        return redirect()->route('articles.index')
+                         ->with('success', 'Статья создана!');
+    }
+
+    public function edit($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('article.edit', compact('article'));
+    }
+
+    public function update(ArticleUpdateRequest $request, $id)
+    {
+        $article = Article::findOrFail($id);
+        $article->fill($request->validated());
+        $article->save();
+
+        return redirect()->route('articles.index')
+                         ->with('success', 'Статья обновлена!');
     }
 }
-

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Создать статью')
-@section('header', 'Создать статью')
+@section('title', 'Редактировать статью')
+@section('header', 'Редактировать статью')
 
 @section('content')
-    {{-- Вывод ошибок (оставляем тут!) --}}
+    {{-- Вывод ошибок --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -15,10 +15,10 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('articles.store') }}">
+    <form method="POST" action="{{ route('articles.update', $article->id) }}">
         @csrf
-        {{-- 🔹 Вставляем общие поля --}}
+        @method('PATCH')
         @include('article.form')
-        <button type="submit" class="btn btn-primary">Создать</button>
+        <button type="submit" class="btn btn-primary">Обновить</button>
     </form>
 @endsection
