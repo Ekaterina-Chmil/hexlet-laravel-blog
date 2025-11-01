@@ -21,3 +21,6 @@ Route::get('about', [PageController::class, 'about'])->name('about');
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::delete('articles/{id}', [ArticleController::class, 'destroy'])
+    ->name('articles.destroy');

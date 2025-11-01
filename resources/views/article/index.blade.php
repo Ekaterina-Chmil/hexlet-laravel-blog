@@ -26,6 +26,14 @@
 
         {{-- 🔹 Ссылка на редактирование --}}
         <a href="{{ route('articles.edit', $article->id) }}">Редактировать</a>
+        {{-- 🔥 Ссылка на удаление --}}
+        <form action="{{ route('articles.destroy', $article->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" onclick="return confirm('Вы уверены?');" style="color: red; background: none; border: none; cursor: pointer;">
+        Удалить
+    </button>
+</form>
         <hr>
     @endforeach
 
